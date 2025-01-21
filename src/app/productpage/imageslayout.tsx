@@ -28,9 +28,7 @@ export default function ImagesLayout({
   colors,
   sizes,
 }: ImagesLayoutProps) {
-  const [selectedImage, setSelectedImage] = useState<string>(
-    galleryImages[0]?.src
-  );
+  
 
   const getDiscountedPrice = (originalPrice: number, discount: number) => {
     return (originalPrice * (1 - discount / 100)).toFixed(2);
@@ -65,7 +63,7 @@ export default function ImagesLayout({
         id: id, // Example unique ID based on the title
         name: title,
         price: originalPrice, // Ensure the price is a number
-        image: selectedImage,
+        image: galleryImages[0].src,
         discountPercent: discount || 0,
         rating,
         color: selectedColor, // Pass selected color

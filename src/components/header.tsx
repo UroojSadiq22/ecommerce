@@ -2,11 +2,11 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { CircleUserRound, ShoppingCart, X } from "lucide-react";
-import Searchbar from "@/components/searchbar";
 import { useState } from "react";
 import Mobilenav from "./mobilenav";
 import Desktopnav from "./desktopnav";
 import { useCart } from "@/app/context/cart-context";
+import SearchComponent from "./search";
 
 export default function Header() {
   const { getTotalItems } = useCart();  // Get the total items in the cart
@@ -63,11 +63,11 @@ export default function Header() {
         </div>
 
         <div className="flex justify-center items-center gap-4">
-          <Searchbar />
+          <SearchComponent />
           <Link href="/cart" className="cursor-pointer">
             <ShoppingCart />
             {totalItems > 0 && (
-              <span  className="absolute top-10 md:right-24 right-12 bg-red-500 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
+              <span  className="absolute md:top-8 top-11 md:right-48 right-12 bg-red-500 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
                 {totalItems}
               </span>
             )}

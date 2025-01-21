@@ -147,7 +147,7 @@ export default function Cards({ products }: CardsProps) {
 
     if (existingItem) {
       toast.info("This item is already in the cart!", {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
         transition: Slide,
       });
@@ -162,7 +162,7 @@ export default function Cards({ products }: CardsProps) {
       });
 
       toast.success("Item added to the cart!", {
-        position: "top-center",
+        position: "bottom-right",
         autoClose: 3000,
         transition: Slide,
       });
