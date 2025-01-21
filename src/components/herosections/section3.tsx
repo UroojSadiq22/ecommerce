@@ -33,7 +33,7 @@ export default function Topsellings() {
     colors,
     sizes,
     rating,
-    wear for
+    wearfor
          }`;
       const data = await client.fetch(query);
 

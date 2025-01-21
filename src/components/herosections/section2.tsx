@@ -34,7 +34,7 @@ export default function Arrivals() {
   colors,
   sizes,
   rating,
-  wear for
+  wearfor
        }`;
       const data = await client.fetch(query);
 
