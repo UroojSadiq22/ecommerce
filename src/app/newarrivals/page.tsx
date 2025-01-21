@@ -19,6 +19,7 @@ type Product = {
   isNew: boolean; // Matches "new" in schema
   colors: string[];
   sizes: string[];
+  wearfor: "men" | "women" | "kids";
   imageUrl: string; // Matches the alias for image URL
 };
 
@@ -28,35 +29,36 @@ export default function Newarrivals() {
     { label: "New arrivals", href: "" },
   ];
 
-   const [products, setProducts] = useState<Product[]>([]);
-   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-   const [selectedColors, setSelectedColors] = useState<string[]>([]);
-   const [selectedPriceRange, setSelectedPriceRange] = useState<
-     [number, number]
-   >([0, 500]);
-   const [currentPage, setCurrentPage] = useState(1);
-   const [itemsPerPage, setItemsPerPage] = useState(6);
- 
-   // Update items per page based on screen size
-   useEffect(() => {
-     const handleResize = () => {
-       setItemsPerPage(window.innerWidth < 768 ? 3 : 6);
-     };
- 
-     handleResize(); // Set initial value
-     window.addEventListener("resize", handleResize);
- 
-     return () => {
-       window.removeEventListener("resize", handleResize);
-     };
-   }, []);
- 
-   
+  const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [selectedWearFor, setSelectedWearFor] = useState<
+    ("men" | "women" | "kids")[]
+  >([]);
+  const [selectedColors, setSelectedColors] = useState<string[]>([]);
+  const [selectedPriceRange, setSelectedPriceRange] = useState<
+    [number, number]
+  >([0, 500]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6);
 
-   useEffect(() => {
-     const fetchProducts = async () => {
-       const query = `*[_type == "products"]{
+  // Update items per page based on screen size
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(window.innerWidth < 768 ? 3 : 6);
+    };
+
+    handleResize(); // Set initial value
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const query = `*[_type == "products"]{
          _id,
           name,
           description,
@@ -65,43 +67,57 @@ export default function Newarrivals() {
           discountPercent,
           isNew,
           colors,
-          sizes
+          sizes,
+          gender,
+          wearfor
         }`;
-       const data = await client.fetch(query);
- 
-        const itemsIsNew = data.filter(
+      const data = await client.fetch(query);
+
+      const itemsIsNew = data.filter(
         (product: Product) => product.isNew === true
       );
- 
-       setProducts(itemsIsNew); // Set discounted products
-       setFilteredProducts(itemsIsNew); // Initial display
-     };
- 
-     fetchProducts();
-   }, []);
- 
-   useEffect(() => {
-     const filtered = products.filter((product) => {
-       const sizeMatch =
-         selectedSizes.length === 0 ||
-         selectedSizes.some((size) => product.sizes.includes(size));
-       const colorMatch =
-         selectedColors.length === 0 ||
-         selectedColors.some((color) => product.colors.includes(color));
-       const priceMatch =
-         product.price >= selectedPriceRange[0] &&
-         product.price <= selectedPriceRange[1];
-       return sizeMatch && colorMatch && priceMatch;
-     });
- 
-     setFilteredProducts(filtered);
-     setCurrentPage(1); // Reset to the first page when filters change
-   }, [products, selectedSizes, selectedColors, selectedPriceRange]);
- 
-   // Paginate products
+
+      setProducts(itemsIsNew); // Set discounted products
+      setFilteredProducts(itemsIsNew); // Initial display
+    };
+
+    fetchProducts();
+  }, []);
+
+  useEffect(() => {
+    const filtered = products.filter((product) => {
+      const sizeMatch =
+        selectedSizes.length === 0 ||
+        selectedSizes.some((size) => product.sizes.includes(size));
+      const colorMatch =
+        selectedColors.length === 0 ||
+        selectedColors.some((color) => product.colors.includes(color));
+      const priceMatch =
+        product.price >= selectedPriceRange[0] &&
+        product.price <= selectedPriceRange[1];
+      const wearForMatch =
+        selectedWearFor.length === 0 ||
+        selectedWearFor.includes(product.wearfor);
+
+      return sizeMatch && colorMatch && priceMatch && wearForMatch;
+    });
+
+    setFilteredProducts(filtered);
+    setCurrentPage(1); // Reset to the first page when filters change
+  }, [
+    products,
+    selectedSizes,
+    selectedColors,
+    selectedPriceRange,
+    selectedWearFor,
+  ]);
+
+  // Paginate products
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  const noProductsFound = filteredProducts.length === 0;
 
   return (
     <main className="min-h-screen md:pt-28 pt-28 md:px-12 px-4 flex flex-col ">
@@ -109,7 +125,10 @@ export default function Newarrivals() {
         <TopPagepath items={paths} />
       </div>
 
-      <h1 className="my-4 font-integral text-2xl font-extrabold">Step Into Style: New Arrivals!</h1>
+      <h1 className="my-4 font-integral text-2xl font-extrabold">
+        Step Into Style: New Arrivals!
+      </h1>
+
       {/* <ImagesLayout /> */}
       <div className="md:hidden">
         <Sheet>
@@ -128,36 +147,42 @@ export default function Newarrivals() {
               setSelectedColors={setSelectedColors}
               selectedPriceRange={selectedPriceRange}
               setSelectedPriceRange={setSelectedPriceRange}
+              selectedWearFor={selectedWearFor}
+              setSelectedWearFor={setSelectedWearFor}
             />
           </SheetContent>
         </Sheet>
       </div>
 
-
       <div>
         {products.length > 0 ? (
-         
           <div className="md:grid md:grid-cols-[3fr,9fr] gap-2 mt-4 items-start">
-                      <div className="hidden md:block border-2 p-4 rounded-2xl">
-                        <Filters
-                          selectedSizes={selectedSizes}
-                          setSelectedSizes={setSelectedSizes}
-                          selectedColors={selectedColors}
-                          setSelectedColors={setSelectedColors}
-                          selectedPriceRange={selectedPriceRange}
-                          setSelectedPriceRange={setSelectedPriceRange}
-                        />
-                      </div>
-                      <div className="flex flex-col gap-4 items-center">
-          
-                        <Cards products={paginatedProducts} />
-                        <PaginationComponent
-                          currentPage={currentPage}
-                          totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
-                          onPageChange={setCurrentPage}
-                        />
-                      </div>
-                    </div>
+            <div className="hidden md:block border-2 p-4 rounded-2xl">
+              <Filters
+                selectedSizes={selectedSizes}
+                setSelectedSizes={setSelectedSizes}
+                selectedColors={selectedColors}
+                setSelectedColors={setSelectedColors}
+                selectedPriceRange={selectedPriceRange}
+                setSelectedPriceRange={setSelectedPriceRange}
+                selectedWearFor={selectedWearFor}
+                setSelectedWearFor={setSelectedWearFor}
+              />
+            </div>
+            <div className="flex flex-col gap-4 items-center">
+              {noProductsFound && (
+                <div className="text-center text-red-500 font-bold my-4 h-[40rem]">
+                  No products match the selected filters.
+                </div>
+              )}
+              <Cards products={paginatedProducts} />
+              <PaginationComponent
+                currentPage={currentPage}
+                totalPages={Math.ceil(filteredProducts.length / itemsPerPage)}
+                onPageChange={setCurrentPage}
+              />
+            </div>
+          </div>
         ) : (
           <Loader />
         )}

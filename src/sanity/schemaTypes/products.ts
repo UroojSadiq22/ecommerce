@@ -66,8 +66,8 @@ export default defineType({
             ]
         },
         { // New fields
-            name: 'gender', 
-            title: 'Gender',
+            name: 'wearfor', 
+            title: 'Wearfor',
             type: 'string',
             options: {
               list: [

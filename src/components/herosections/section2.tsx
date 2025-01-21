@@ -32,7 +32,9 @@ export default function Arrivals() {
   discountPercent,
   isNew,
   colors,
-  sizes
+  sizes,
+  rating,
+  wear for
        }`;
       const data = await client.fetch(query);
 
@@ -57,7 +59,7 @@ export default function Arrivals() {
         NEW ARRIVALS
       </h1>
 
-      <div className="w-[80%] overflow-x-auto scrollbar-hide p-8">
+      <div className="w-[80%] overflow-x-auto scrollbar-hide lg:p-8">
        
               {products.length > 0 ? (
                 <Cards products={filteredProducts}/>

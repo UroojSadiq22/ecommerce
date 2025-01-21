@@ -19,6 +19,7 @@ type Product = {
   isNew: boolean; // Matches "new" in schema
   colors: string[];
   sizes: string[];
+  wearfor: "men" | "women" | "kids";
   imageUrl: string; // Matches the alias for image URL
 };
 
@@ -30,6 +31,9 @@ export default function Onsale() {
 
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedWearFor, setSelectedWearFor] = useState<
+    ("men" | "women" | "kids")[]
+  >([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [selectedPriceRange, setSelectedPriceRange] = useState<
@@ -63,7 +67,9 @@ export default function Onsale() {
   discountPercent,
   isNew,
   colors,
-  sizes
+  sizes,
+  rating,
+  wearfor
        }`;
       const data = await client.fetch(query);
 
@@ -91,24 +97,40 @@ export default function Onsale() {
       const priceMatch =
         product.price >= selectedPriceRange[0] &&
         product.price <= selectedPriceRange[1];
-      return sizeMatch && colorMatch && priceMatch;
+      const wearForMatch =
+        selectedWearFor.length === 0 ||
+        selectedWearFor.includes(product.wearfor);
+
+      return sizeMatch && colorMatch && priceMatch && wearForMatch;
     });
 
     setFilteredProducts(filtered);
     setCurrentPage(1); // Reset to the first page when filters change
-  }, [products, selectedSizes, selectedColors, selectedPriceRange]);
+  }, [
+    products,
+    selectedSizes,
+    selectedColors,
+    selectedPriceRange,
+    selectedWearFor,
+  ]);
 
   // Paginate products
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedProducts = filteredProducts.slice(startIndex, endIndex);
+
+  const noProductsFound = filteredProducts.length === 0;
+
   return (
     <main className="min-h-screen md:pt-28 pt-28 md:px-12 px-4 flex flex-col ">
       <div>
         <TopPagepath items={paths} />
       </div>
-      <h1 className="my-4 font-integral text-2xl font-extrabold">Limited Time Offers – Grab the Best Discounts!</h1>
+      <h1 className="my-4 font-integral text-2xl font-extrabold">
+        Limited Time Offers – Grab the Best Discounts!
+      </h1>
       {/* <ImagesLayout /> */}
+
       <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
@@ -126,6 +148,8 @@ export default function Onsale() {
               setSelectedColors={setSelectedColors}
               selectedPriceRange={selectedPriceRange}
               setSelectedPriceRange={setSelectedPriceRange}
+              selectedWearFor={selectedWearFor}
+              setSelectedWearFor={setSelectedWearFor}
             />
           </SheetContent>
         </Sheet>
@@ -142,10 +166,16 @@ export default function Onsale() {
                 setSelectedColors={setSelectedColors}
                 selectedPriceRange={selectedPriceRange}
                 setSelectedPriceRange={setSelectedPriceRange}
+                selectedWearFor={selectedWearFor}
+                setSelectedWearFor={setSelectedWearFor}
               />
             </div>
             <div className="flex flex-col gap-4 items-center">
-
+              {noProductsFound && (
+                <div className="text-center text-red-500 font-bold my-4 h-[40rem]">
+                  No products match the selected filters.
+                </div>
+              )}
               <Cards products={paginatedProducts} />
               <PaginationComponent
                 currentPage={currentPage}

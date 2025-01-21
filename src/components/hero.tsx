@@ -1,12 +1,12 @@
 "use client"
 import Image from "next/image";
 import CountUp from "react-countup";
-import { Button } from "./ui/button";
 import Section1 from "./herosections/section1";
 import Section2 from "./herosections/section2";
 import Section3 from "./herosections/section3";
 import Section4 from "./herosections/section4";
 import Section5 from "./herosections/section5";
+import Link from "next/link";
 
 const stats = [
   {
@@ -65,15 +65,15 @@ export default function Hero() {
               designed to bring out your individulity and cater to your sense of
               style
             </p>
-            <Button
-              variant="outline"
-              className="md:w-[15rem] w-full relative overflow-hidden group bg-black transition-all duration-300 ease-in-out px-4 py-6 rounded-3xl text-white"
+            <Link
+              href="/onsale"
+              className="md:w-[15rem] w-full relative overflow-hidden group bg-black transition-all duration-300 ease-in-out px-4 py-4 rounded-3xl text-white"
             >
               <span className="absolute inset-0 bg-gray-400 transition-transform duration-300 ease-in-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-              <h1 className="relative z-10 font-bold flex items-center gap-2">
+              <h1 className="relative z-10 font-bold flex justify-center gap-2">
                 Shop Now
               </h1>
-            </Button>
+            </Link>
             <div className="md:hidden grid grid-cols-2  gap-4 m-4">
               {stats.map((item) => {
                 return (

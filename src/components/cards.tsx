@@ -168,6 +168,17 @@ export default function Cards({ products }: CardsProps) {
       });
     }
   };
+  const renderStars = (rating: number) => {
+    const filledStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0;
+
+    const stars = [
+      ...Array(filledStars).fill("⭐️"), // Filled stars
+      ...Array(halfStar).fill("☆"),
+    ];
+
+    return stars.join(" ");
+  };
 
   return (
     <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -192,7 +203,7 @@ export default function Cards({ products }: CardsProps) {
             <h1 className="font-bold text-lg text-gray-800">{product.name}</h1>
 
             {product.rating && (
-              <p className="text-sm text-gray-500 mt-1">⭐ {product.rating}/5</p>
+              <p className="text-sm text-gray-500 mt-1">{renderStars(product.rating)} {product.rating}/5 </p>
             )}
 
             {/* Pricing */}

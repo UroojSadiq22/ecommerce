@@ -7,7 +7,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 
-
 type FiltersProps = {
   selectedSizes: string[];
   setSelectedSizes: (sizes: string[]) => void;
@@ -15,6 +14,9 @@ type FiltersProps = {
   setSelectedColors: (colors: string[]) => void;
   selectedPriceRange: [number, number];
   setSelectedPriceRange: (range: [number, number]) => void;
+  selectedWearFor: ("men" | "women" | "kids")[];
+  setSelectedWearFor: (wearFor: ("men" | "women" | "kids")[]) => void;
+
 };
 
 export default function Filters({
@@ -24,6 +26,9 @@ export default function Filters({
   setSelectedColors,
   selectedPriceRange,
   setSelectedPriceRange,
+  selectedWearFor,
+  setSelectedWearFor,
+  
 }: FiltersProps) {
   const sizes = ["XXS", "XS", "S", "M", "L", "XL", "XXL"];
 
@@ -52,9 +57,24 @@ export default function Filters({
       setSelectedColors([...selectedColors, color]);
     }
   };
+
+  const handleWearForChange = (newSelection: "men" | "women" | "kids") => {
+    if (selectedWearFor.includes(newSelection)) {
+      setSelectedWearFor(
+        selectedWearFor.filter((wearFor) => wearFor !== newSelection)
+      );
+    } else {
+      setSelectedWearFor([...selectedWearFor, newSelection]);
+    }
+  };
+
+ 
+
+  
   return (
     <div className="">
       <h1 className="text-xl font-integral font-extrabold">Filters</h1>
+      
       <Accordion type="multiple" className="w-full">
         <AccordionItem value="filters">
           <AccordionTrigger className="font-bold text-base">
@@ -62,9 +82,21 @@ export default function Filters({
           </AccordionTrigger>
           <AccordionContent>
             <div className="flex flex-col gap-2">
-              <h1>Mens Wear</h1>
-              <h1>Womens Wear</h1>
-              <h1>Kids Wear</h1>
+              {["men", "women", "kids"].map((wearFor) => (
+                <Button
+                  key={wearFor}
+                  variant="outline"
+                  className={`relative overflow-hidden group transition-all duration-300 ease-in-out rounded-3xl text-black md:text-base text-xs bg-gray-200 hover:text-white ${
+                    selectedSizes.includes(wearFor as "men" | "women" | "kids") ? "bg-gray-400" : ""
+                  }`}
+                  onClick={() => handleWearForChange(wearFor as "men" | "women" | "kids")}
+                >
+                  <span className="absolute inset-0 bg-black transition-transform duration-300 ease-in-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
+                  <h1 className="relative z-10">{wearFor.charAt(0).toUpperCase() + wearFor.slice(1)}{" "}</h1>
+                </Button>
+
+               
+              ))}
             </div>
           </AccordionContent>
         </AccordionItem>
