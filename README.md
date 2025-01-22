@@ -44,38 +44,38 @@ Deployed to a cloud platform with CI/CD pipelines for automated updates, ensurin
 # Setup Instructions
 To get the project running locally, follow these steps:
 
-## Create a New Next.js Project:
+### Create a New Next.js Project:
 npx create-next-app .
 
-## Install Dependencies:
+### Install Dependencies:
 npm install
 
 ## Install and Set Up Sanity CMS:
 
-## Install the Sanity CLI:
+### Install the Sanity CLI:
 npm install -g @sanity/cli
 
-## Navigate to the sanity directory and initialize the Sanity project:
+### Navigate to the sanity directory and initialize the Sanity project:
 cd sanity
 sanity init
 
-# Configure Environment Variables: 
+## Configure Environment Variables: 
 
-## Create a .env file at the root of your project with the following details:
+### Create a .env file at the root of your project with the following details:
 SANITY_PROJECT_ID=your-sanity-project-id
 SANITY_DATASET=production
 SANITY_TOKEN=your-sanity-token
 
-## Run the Development Server:
+### Run the Development Server:
 npm run dev
 
-## Access the Application: 
+### Access the Application: 
 Open [https://urooj-sadiq-ecommerce.vercel.app/] with your browser to see the result.
 
-## Using the Platform
+### Using the Platform
 Shopping: Browse through products, add them to your cart, and place orders.
 
-## Contributing
+### Contributing
 If you’d like to contribute to this project, feel free to fork the repository, create your branch, and submit a pull request.
 
 ### License
