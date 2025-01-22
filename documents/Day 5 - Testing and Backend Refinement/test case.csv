@@ -1,0 +1,27 @@
+Test Case ID,Test Case Description,Test Steps,Expected Result,Actual Result,Status,Severity Level,Assigned To,Remarks
+TC001,Validate product listing page,1. Navigate to the product listing page.,Products are displayed correctly with proper layout and navigation.,Products displayed as expected.,Passed,Medium,,No issues found.
+,,2. Verify all products are displayed.,,,,,,
+,,3. Check for pagination or infinite scrolling.,,,,,,
+TC002,Verify product search functionality,1. Enter a valid product name in the search bar.,Correct products are displayed for valid searches. No results or suggestions for invalid queries.,Search works as expected.,Passed,High,,Works smoothly.
+,,2. Verify the results.,,,,,,
+,,3. Test with invalid or partial product names.,,,,,,
+TC003,Validate filter functionality,"1. Apply various filters (e.g., wear for, price range).","Filtered results are displayed accurately, and results revert correctly after removing filters.",Filter functionality works accurately.,Passed,Medium,,Works as expected.
+,,2. Verify results.,,,,,,
+,,3. Remove filters and re-check.,,,,,,
+TC004,Check add-to-cart functionality,1. Select a product.,"Product is added to the cart, and the cart updates dynamically.",Cart updates as expected.,Passed,High,,No issues.
+,,"2. Click the ""Add to Cart"" button.",,,,,,
+,,3. Verify cart contents.,,,,,,
+TC005,Test dynamic routing for product pages,1. Open a product from the listing page.,Product details page loads with correct dynamic URL and content.,Product page routing is correct.,Passed,High,,Functions as expected.
+,,2. Verify that the product details page loads with the correct product.,,,,,,
+TC006,Verify notification for actions,"1. Perform actions like adding to the cart, applying filters, or searching.",Appropriate success or error notifications are displayed.,Notifications are displayed as expected.,Passed,Medium,,Works well.
+,,2. Observe notification messages.,,,,,,
+TC007,Test error handling for APIs,"1. Simulate API errors (e.g., disconnect internet or mock API failure).","User-friendly error messages are displayed, and the app remains functional.",No error messages are displayed when data is not fetching. Only a loader is shown.,Failed ,High,,Needs improvement in error handling.
+,,2. Verify fallback messages or error handling.,,,,,,
+TC008,Validate product data fetching,1. Refresh the product listing page.,"Product data loads dynamically, with loading indicators and no performance lag.",Data fetching is efficient and smooth.,Passed,Medium,,All functionalities working.
+,,2. Verify that products load dynamically using API calls.,,,,,,
+,,3. Check loading indicators during API calls.,,,,,,
+TC009,Ensure mobile responsiveness,1. Open the website on various screen sizes.,"Responsive layout adjusts correctly for all devices (mobile, tablet, desktop).","The layout is responsive for mobile and desktop, but there is a little responsiveness issue on tablets.",Passed,Medium,,Overall Test successful. Tablet layout needs little adjustments.
+,,"2. Verify layout adjustments (e.g., search bar, filters, buttons).",,,,,,
+TC010,Check cart update notification,1. Add multiple products to the cart.,Notifications show the correct number of items added/removed.,Notifications update accurately.,Passed,Medium,,Notifications are accurate.
+,,2. Verify notifications after each addition.,,,,,,
+,,3. Remove a product and check notifications.,,,,,,
