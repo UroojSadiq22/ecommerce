@@ -7,8 +7,10 @@ import React, { useEffect, useState } from "react";
 import ImagesLayout from "../imageslayout";
 import TopPagepath from "@/components/top-pagepath";
 import Loader from "@/components/loader";
+import Reviews from "@/components/reviews";
 
 type Product = {
+  stock: number;
   rating: number;
   _id: string;
   name: string;
@@ -28,18 +30,18 @@ export default function ProductPage() {
   useEffect(() => {
     const fetchProducts = async () => {
       const query = `*[_type == "products" && _id == $id][0]{
-       
-
-           _id,
-  name,
-  description,
-  price,
-  "imageUrl": image.asset->url,
-  discountPercent,
-  isNew,
-  colors,
-  sizes
-        }`; // Fetch the blog based on the `id`
+      _id,
+      name,
+      description,
+      price,
+      "imageUrl": image.asset->url,
+      discountPercent,
+      isNew,
+      rating,
+      colors,
+      sizes,
+      stock
+      }`; // Fetch the blog based on the `id`
       try {
         const data: Product | null = await client.fetch(query, { id });
         setProduct(data);
@@ -71,7 +73,7 @@ export default function ProductPage() {
     { label: product.name, href: `/product/${product._id}` },
   ];
   return (
-    <div className="md:px-14 px-2 py-8 md:pt-28 pt-24 flex flex-col">
+    <div className="max-w-7xl mx-auto md:px-14 px-2 py-8 md:pt-28 pt-24 min-h-screen flex flex-col">
       <div>
         <TopPagepath items={paths} />
       </div>
@@ -83,10 +85,14 @@ export default function ProductPage() {
         description={product.description}
         originalPrice={product.price}
         discount={product.discountPercent}
-        rating={product.rating || 0}
+        rating={product.rating}
         colors={product.colors}
         sizes={product.sizes}
+        stock={product.stock}
       />
+
+        <Reviews id={product._id} />
+      
     </div>
   );
 }

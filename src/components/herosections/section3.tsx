@@ -57,7 +57,7 @@ export default function Topsellings() {
       <h1 className="font-integral font-extrabold md:text-5xl text-4xl my-6">
         TOP SELLINGS
       </h1>
-      <div className="w-[80%] lg:p-8 overflow-x-auto scrollbar-hide">
+      <div className="overflow-x-auto scrollbar-hide">
         {products.length > 0 ? <Cards products={filteredProducts} /> : ""}
       </div>
       <Link

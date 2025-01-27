@@ -83,16 +83,31 @@ export default defineType({
             type: 'number',
           },
           { 
-            name: 'reviews',
-            title: 'Reviews',
-            type: 'array',
+            name: 'Instock', 
+            title: 'InStock',
+            type: 'boolean',
+          },
+          { 
+            name: 'stock', 
+            title: 'Stock',
+            type: 'number',
+          },
+          {
+            name: "reviews",
+            type: "array",
+            title: "Reviews",
             of: [
               {
-                type: 'object',
+                type: "object",
                 fields: [
-                  { name: 'user', title: 'User', type: 'string' },
-                  { name: 'comment', title: 'Comment', type: 'text' },
-                  { name: 'rating', title: 'Rating', type: 'number' },
+                  { name: "name", type: "string", title: "Name" },
+                  { name: "review", type: "text", title: "Review" },
+                  { name: "rating", type: "number", title: "Rating" },
+                  {
+                    name: "datePosted",
+                    type: "datetime", // Use "datetime" for storing dates and times
+                    title: "Date Posted",
+                  },
                 ],
               },
             ],

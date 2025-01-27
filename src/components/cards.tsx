@@ -114,7 +114,6 @@
 //   );
 // }
 
-
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "./ui/button";
@@ -133,6 +132,8 @@ type Product = {
   sizes: string[];
   imageUrl: string;
   rating?: number;
+  stock: number;
+  Instock: boolean;
 };
 
 type CardsProps = {
@@ -140,9 +141,26 @@ type CardsProps = {
 };
 
 export default function Cards({ products }: CardsProps) {
-  const { cartItems, addItem } = useCart();
+  const { cartItems, addItem, addToWishlist } = useCart();
 
   const handleAddToCart = (product: Product) => {
+    if (product.stock <= 0) {
+      toast.error("This item is out of stock!", {
+        position: "bottom-right",
+        autoClose: 3000,
+        transition: Slide,
+      });
+      addToWishlist({
+        id: product._id,
+        name: product.name,
+        price: product.price,
+        image: product.imageUrl,
+        discountPercent: product.discountPercent,
+        rating: product.rating,
+        stock: product.stock,
+      });
+      return;
+    }
     const existingItem = cartItems.find((item) => item.id === product._id);
 
     if (existingItem) {
@@ -159,6 +177,7 @@ export default function Cards({ products }: CardsProps) {
         image: product.imageUrl,
         discountPercent: product.discountPercent,
         rating: product.rating,
+        stock: product.stock,
       });
 
       toast.success("Item added to the cart!", {
@@ -203,7 +222,9 @@ export default function Cards({ products }: CardsProps) {
             <h1 className="font-bold text-lg text-gray-800">{product.name}</h1>
 
             {product.rating && (
-              <p className="text-sm text-gray-500 mt-1">{renderStars(product.rating)} {product.rating}/5 </p>
+              <p className="text-sm text-gray-500 mt-1">
+                {renderStars(product.rating)} {product.rating}/5{" "}
+              </p>
             )}
 
             {/* Pricing */}
@@ -231,6 +252,7 @@ export default function Cards({ products }: CardsProps) {
               )}
             </div>
           </div>
+          {/* {product.Instock ? <h1>Instock({product.stock})</h1> : <h1>out of stock</h1>} */}
 
           {/* Add to Cart Button */}
           <Button

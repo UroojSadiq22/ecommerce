@@ -139,7 +139,7 @@ export default function Mens() {
   const noProductsFound = filteredProducts.length === 0;
 
   return (
-    <main className="min-h-screen md:pt-28 pt-28 md:px-12 px-4 flex flex-col ">
+    <main className="min-h-screen max-w-7xl mx-auto md:pt-28 pt-28 md:px-12 px-4 flex flex-col ">
       <div>
         <TopPagepath items={paths} />
       </div>

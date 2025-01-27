@@ -45,7 +45,7 @@ export default function Cart() {
   const deliveryCharges = 200; // Free delivery if subtotal > 100
   const total = subtotal - discount + deliveryCharges;
   return (
-    <main className="md:pt-28 pt-28 md:px-12 px-4 mb-14 flex flex-col ">
+    <main className="max-w-7xl mx-auto md:pt-28 pt-28 md:px-12 px-4 mb-14 flex flex-col ">
       <TopPagepath items={paths} />
 
       <h1 className="font-integral font-extrabold text-4xl md:my-4 my-2">

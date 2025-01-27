@@ -7,12 +7,13 @@ import Mobilenav from "./mobilenav";
 import Desktopnav from "./desktopnav";
 import { useCart } from "@/app/context/cart-context";
 import SearchComponent from "./search";
+import Wishlist from "./wishlist";
 
 export default function Header() {
-  const { getTotalItems } = useCart();  // Get the total items in the cart
-  const totalItems = getTotalItems();   // Get the total number of items
+  const { getTotalItems, getWishlistTotalItems } = useCart(); // Get the total items in the cart
+  const totalItems = getTotalItems(); // Get the total number of items
   const [isVisible, setIsVisible] = useState(true);
-
+  const wishlistTotalItems = getWishlistTotalItems();
   const handleClose = () => {
     setIsVisible(false);
   };
@@ -21,7 +22,6 @@ export default function Header() {
     { name: "Men's Clothing", path: "/shop/mens" },
     { name: "Women's Clothing", path: "/shop/womens" },
     { name: "Kids Clothing", path: "/shop/kids" },
-
   ];
   const navLinks = [
     { name: "Shop", path: "" },
@@ -59,15 +59,29 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-         <Desktopnav navLinks={navLinks} pathname={pathname} shopDropdownLinks={shopDropdownLinks}/>
+          <Desktopnav
+            navLinks={navLinks}
+            pathname={pathname}
+            shopDropdownLinks={shopDropdownLinks}
+          />
         </div>
 
-        <div className="flex justify-center items-center gap-4">
+        <div className="flex justify-center items-center md:gap-4 gap-2">
           <SearchComponent />
+          <div>
+            <Wishlist />
+            {wishlistTotalItems > 0 && (
+               <span className="absolute md:top-8 top-11 md:right-48 right-12 bg-red-500 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
+               {wishlistTotalItems}
+             </span>
+            )}
+           
+          </div>
+
           <Link href="/cart" className="cursor-pointer">
             <ShoppingCart />
             {totalItems > 0 && (
-              <span  className="absolute md:top-8 top-11 md:right-48 right-12 bg-red-500 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
+              <span className="absolute md:top-8 top-11 md:right-48 right-12 bg-red-500 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
                 {totalItems}
               </span>
             )}

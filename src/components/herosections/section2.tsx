@@ -59,7 +59,7 @@ export default function Arrivals() {
         NEW ARRIVALS
       </h1>
 
-      <div className="w-[80%] overflow-x-auto scrollbar-hide lg:p-8">
+      <div className="overflow-x-auto scrollbar-hide">
        
               {products.length > 0 ? (
                 <Cards products={filteredProducts}/>

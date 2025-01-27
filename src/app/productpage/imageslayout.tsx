@@ -15,6 +15,7 @@ type ImagesLayoutProps = {
   rating: number;
   colors: string[];
   sizes: string[];
+  stock: number;
 };
 
 export default function ImagesLayout({
@@ -27,9 +28,8 @@ export default function ImagesLayout({
   rating,
   colors,
   sizes,
+  stock,
 }: ImagesLayoutProps) {
-  
-
   const getDiscountedPrice = (originalPrice: number, discount: number) => {
     return (originalPrice * (1 - discount / 100)).toFixed(2);
   };
@@ -67,7 +67,8 @@ export default function ImagesLayout({
         discountPercent: discount || 0,
         rating,
         color: selectedColor, // Pass selected color
-        size: selectedSize, // Pass selected size
+        size: selectedSize,
+        stock,
       });
 
       toast.success("Item added to the cart!", {
@@ -82,7 +83,7 @@ export default function ImagesLayout({
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   return (
-    <main className="flex lg:flex-row flex-col mt-4 min-h-screen">
+    <main className="flex lg:flex-row flex-col mt-4">
       {/* <div className="grid md:grid-cols-[1fr,4fr] grid-cols-1 gap-4 mb-4"> */}
       {/* <div className="flex md:flex-col items-center gap-2  order-2 md:order-none">
           {galleryImages.map((i, index) => (
@@ -103,51 +104,53 @@ export default function ImagesLayout({
             </div>
           ))}
         </div> */}
+      <div className="flex md:flex-row flex-col items-center">
+        <div className="w-full h-full bg-gray-200 rounded-lg shadow-lg">
+          <Image
+            src={galleryImages[0].src}
+            alt={galleryImages[0].alt}
+            width={700}
+            height={500}
+            className="rounded-md "
+          />
+        </div>
+        {/* </div> */}
 
-      <div className="w-full h-full  bg-gray-200 rounded-lg ">
-        <Image
-          src={galleryImages[0].src}
-          alt="Selected T-shirt"
-          width={500}
-          height={500}
-          className="rounded-md"
-        />
-      </div>
-      {/* </div> */}
+        <div className="md:px-6 w-full">
+          <div className="flex flex-col gap-2 border-b-2 pb-4">
+            {/* Discounted price */}
+            <h1 className="font-integral font-extrabold lg:text-3xl text-2xl">
+              {title}
+            </h1>
+            <div className="flex items-center gap-4">
+              <p className="text-xs">{renderStars(rating)}</p>
+              <p className="text-xs">
+                {rating} <span className="text-gray-400">/5</span>
+              </p>
+            </div>
 
-      <div className="md:px-6 w-full">
-        <div className="flex flex-col gap-2 border-b-2 pb-4">
-          {/* Discounted price */}
-          <h1 className="font-integral font-extrabold md:text-3xl text-2xl">
-            {title}
-          </h1>
-          <div className="flex items-center gap-5">
-            <p className="text-xs">{renderStars(rating)}</p>
-            <p className="text-xs">
-              {rating} <span className="text-gray-400">/5</span>
-            </p>
+            <div className="flex gap-4 items-center">
+              {discount ? (
+                <>
+                  <p className="font-bold text-xl">
+                    ${getDiscountedPrice(originalPrice, discount || 0)}
+                  </p>
+                  <p className="text-xl font-bold line-through text-gray-400">
+                    ${originalPrice}
+                  </p>
+                  <p className="text-xs font-bold text-red-800 bg-red-200 rounded-full p-0.5 px-3">
+                    -{discount}%
+                  </p>
+                </>
+              ) : (
+                <p className="font-bold text-lg">${originalPrice}</p>
+              )}
+            </div>
+            <p className="md:text-sm text-xs text-gray-400">{description}</p>
           </div>
-
-          <div className="flex gap-4 items-center">
-            {discount ? (
-              <>
-                <p className="font-bold text-xl">
-                  ${getDiscountedPrice(originalPrice, discount || 0)}
-                </p>
-                <p className="text-xl font-bold line-through text-gray-400">
-                  ${originalPrice}
-                </p>
-                <p className="text-xs font-bold text-red-800 bg-red-200 rounded-full p-0.5 px-3">
-                  -{discount}%
-                </p>
-              </>
-            ) : (
-              <p className="font-bold text-lg">${originalPrice}</p>
-            )}
-          </div>
-          <p className="md:text-sm text-xs text-gray-400">{description}</p>
         </div>
       </div>
+
       <div className="w-full">
         <h1 className="text-base my-2">Select Colors</h1>
         <div className="flex gap-4 border-b-2 pb-4">

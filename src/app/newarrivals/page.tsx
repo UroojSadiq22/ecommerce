@@ -21,6 +21,8 @@ type Product = {
   sizes: string[];
   wearfor: "men" | "women" | "kids";
   imageUrl: string; // Matches the alias for image URL
+  stock: number;
+  Instock:boolean
 };
 
 export default function Newarrivals() {
@@ -68,8 +70,8 @@ export default function Newarrivals() {
           isNew,
           colors,
           sizes,
-          gender,
-          wearfor
+          wearfor,
+          stock
         }`;
       const data = await client.fetch(query);
 
@@ -120,7 +122,7 @@ export default function Newarrivals() {
   const noProductsFound = filteredProducts.length === 0;
 
   return (
-    <main className="min-h-screen md:pt-28 pt-28 md:px-12 px-4 flex flex-col ">
+    <main className="min-h-screen max-w-7xl mx-auto md:pt-28 pt-28 md:px-12 px-4 flex flex-col ">
       <div>
         <TopPagepath items={paths} />
       </div>
