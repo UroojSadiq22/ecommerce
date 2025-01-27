@@ -68,6 +68,7 @@ export default function Newarrivals() {
           "imageUrl": image.asset->url,
           discountPercent,
           isNew,
+          rating,
           colors,
           sizes,
           wearfor,

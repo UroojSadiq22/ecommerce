@@ -1,30 +1,15 @@
-"use client";
 
-import { client } from "@/sanity/lib/client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+
 import Image from "next/image";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "./ui/sheet";
-import { Heart, Search } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { Heart } from "lucide-react";
 import { useCart } from "@/app/context/cart-context";
 
-type Product = {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  discountPercent?: number;
-  isNew: boolean;
-  colors: string[];
-  sizes: string[];
-  imageUrl: string;
-  rating?: number;
-  stock: number;
-};
 
 export default function Wishlist() {
-  const { wishlistItems, getWishlistTotalItems } = useCart();
-  const wishlistTotalItems = getWishlistTotalItems();
+  const { wishlistItems } = useCart();
+
   return (
     <div className="">
       <Sheet>

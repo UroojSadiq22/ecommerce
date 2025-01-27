@@ -14,6 +14,8 @@ type Product = {
   sizes: string[];
   imageUrl: string; // Matches the alias for image URL
   rating?: number; // Optional field
+  stock: number;
+  Instock:boolean
 };
 
 export default function Topsellings() {

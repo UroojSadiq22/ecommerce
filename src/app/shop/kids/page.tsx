@@ -21,6 +21,8 @@ type Product = {
   wearfor: "men" | "women" | "kids";
   imageUrl: string; // Matches the alias for image URL
   rating?: number; // Optional field
+  stock: number;
+  Instock:boolean
 };
 
 export default function Mens() {
@@ -92,6 +94,8 @@ export default function Mens() {
   sizes,
   rating,
   reviews
+  stock,
+  Instock
 }
 `;
       const data = await client.fetch(query);

@@ -6,6 +6,11 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "../context/cart-context";
 import Image from "next/image";
 import { Slide, toast } from "react-toastify";
+import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
+
+// Make sure to replace this with your Stripe publishable key
+// const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function Cart() {
   const paths = [
@@ -44,6 +49,30 @@ export default function Cart() {
   const discount = subtotal * 0.1; // 10% discount
   const deliveryCharges = 200; // Free delivery if subtotal > 100
   const total = subtotal - discount + deliveryCharges;
+
+  // const [loading, setLoading] = useState(false);
+
+  // const handleCheckout = async () => {
+  //   setLoading(true);
+
+  //   // Call your backend to create a checkout session
+  //   const res = await fetch("/api/checkoutSession", {
+  //     method: "POST",
+  //   });
+
+  //   const { id } = await res.json();
+
+  //   // Redirect to Stripe Checkout
+  //   const stripe = await stripePromise;
+  //   const { error } = await stripe!.redirectToCheckout({ sessionId: id });
+
+  //   if (error) {
+  //     console.error("Error redirecting to checkout:", error);
+  //   }
+
+  //   setLoading(false);
+  // };
+
   return (
     <main className="max-w-7xl mx-auto md:pt-28 pt-28 md:px-12 px-4 mb-14 flex flex-col ">
       <TopPagepath items={paths} />
@@ -195,15 +224,15 @@ export default function Cart() {
               </h1>
             </Button>
           </div>
-          <Button
-            variant="outline"
+          <Link
+            href="/checkout"
             className="relative w-full overflow-hidden group transition-all duration-300 ease-in-out px-6 py-2 rounded-3xl text-black bg-gray-200 hover:text-white"
           >
             <span className="absolute inset-0 bg-black transition-transform duration-300 ease-in-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
             <h1 className="relative z-10 flex items-center gap-2">
-              Go to Checkout
+               Go to Checkout
             </h1>
-          </Button>
+          </Link>
         </div>
       </div>
     </main>
