@@ -15,7 +15,7 @@ type Product = {
   imageUrl: string; // Matches the alias for image URL
   rating?: number; // Optional field
   stock: number;
-  Instock:boolean
+  Instock: boolean;
 };
 
 export default function Topsellings() {
@@ -39,12 +39,11 @@ export default function Topsellings() {
          }`;
       const data = await client.fetch(query);
 
-      
-       // Filter the top 4 products by highest quantity
-       const sortedByQuantity = [...data].sort(
+      // Filter the top 4 products by highest quantity
+      const sortedByQuantity = [...data].sort(
         (a, b) => b.quantity - a.quantity
       );
-      
+
       const topFourProducts = sortedByQuantity.slice(0, 3);
 
       setProducts(data);

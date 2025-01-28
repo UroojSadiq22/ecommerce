@@ -260,7 +260,6 @@ export default function Cards({ products }: CardsProps) {
               )}
             </div>
           </div>
-          {/* {product.Instock ? <h1>Instock({product.stock})</h1> : <h1>out of stock</h1>} */}
 
           {/* Add to Cart Button */}
           <Button

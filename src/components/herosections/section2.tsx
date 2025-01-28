@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { client } from "@/sanity/lib/client";
 import Cards from "../cards";
@@ -16,7 +15,7 @@ type Product = {
   imageUrl: string; // Matches the alias for image URL
   rating?: number; // Optional field
   stock: number;
-  Instock:boolean
+  Instock: boolean;
 };
 
 export default function Arrivals() {
@@ -40,7 +39,6 @@ export default function Arrivals() {
        }`;
       const data = await client.fetch(query);
 
-      
       const itemsIsNew = data.filter(
         (product: Product) => product.isNew === true
       );
@@ -53,8 +51,6 @@ export default function Arrivals() {
     fetchProducts();
   }, []);
 
- 
-
   return (
     <section className="md:p-6 flex flex-col justify-center items-center gap-10 border-b-2">
       <h1 className="font-integral font-extrabold md:text-5xl text-4xl my-6">
@@ -62,17 +58,11 @@ export default function Arrivals() {
       </h1>
 
       <div className="overflow-x-auto scrollbar-hide">
-       
-              {products.length > 0 ? (
-                <Cards products={filteredProducts}/>
-              ) : (
-                ""
-              )}
-           
+        {products.length > 0 ? <Cards products={filteredProducts} /> : ""}
       </div>
 
       <Link
-       href="/newarrivals"
+        href="/newarrivals"
         className="mb-10 border-2 relative overflow-hidden group transition-all duration-300 ease-in-out px-14 py-2 rounded-3xl text-black"
       >
         <span className="absolute inset-0 bg-gray-400 transition-transform duration-300 ease-in-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>

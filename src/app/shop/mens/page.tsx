@@ -33,26 +33,6 @@ export default function Mens() {
   ];
 
   const [products, setProducts] = useState<Product[]>([]);
-
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     const query = `*[_type == "products"]{
-  //       _id,
-  //       name,
-  // description,
-  // price,
-  // "imageUrl": image.asset->url,
-  // discountPercent,
-  // isNew,
-  // colors,
-  // sizes
-  //      }`;
-  //     const data = await client.fetch(query);
-  //     setProducts(data);
-  //   };
-  //   fetchProducts();
-  // }, []);
-
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedWearFor, setSelectedWearFor] = useState<

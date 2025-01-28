@@ -7,7 +7,6 @@ import Mobilenav from "./mobilenav";
 import Desktopnav from "./desktopnav";
 import { useCart } from "@/app/context/cart-context";
 import SearchComponent from "./search";
-import Wishlist from "./wishlist";
 
 export default function Header() {
   const { getTotalItems, getWishlistTotalItems } = useCart(); // Get the total items in the cart
@@ -68,35 +67,16 @@ export default function Header() {
 
         <div className="flex justify-center items-center md:gap-4 gap-2">
           <SearchComponent />
-          {/* <div>
-            <Wishlist />
-            {wishlistTotalItems > 0 && (
-               <span className="absolute md:top-8 top-11 md:right-48 right-12 bg-red-500 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
-               {wishlistTotalItems}
-             </span>
-            )}
-           
-          </div> */}
+        
           <Link href="/wishlist" className="cursor-pointer relative">
-          <Heart/>
-          {wishlistTotalItems > 0 && (
-               <span className="absolute -top-2 -right-1 bg-orange-400 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
-               {wishlistTotalItems}
-             </span>
+            <Heart />
+            {wishlistTotalItems > 0 && (
+              <span className="absolute -top-2 -right-1 bg-orange-400 text-white rounded-full md:h-5 md:w-5 w-4 h-4 flex items-center justify-center">
+                {wishlistTotalItems}
+              </span>
             )}
           </Link>
 
-          {/* <Link href="/wishlist" className="relative w-16 h-16">
-      
-      <Heart/>
-     
-      {wishlistTotalItems > 0 && (
-        <span className="absolute top-0 right-0 -mt-2 -mr-2 bg-red-500 text-white text-xs font-bold w-6 h-6 flex items-center justify-center rounded-full">
-          {wishlistTotalItems}
-        </span>
-      )}
-    </Link> */}
-          
           <Link href="/cart" className="cursor-pointer relative">
             <ShoppingCart />
             {totalItems > 0 && (

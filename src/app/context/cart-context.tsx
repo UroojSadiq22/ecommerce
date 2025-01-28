@@ -132,6 +132,8 @@ type CartContextType = {
   clearCart: () => void;
   getTotalItems: () => number;
   getWishlistTotalItems: () => number;
+  clearWishlist: () => void;
+  removeWishlistItem: (id: string) => void;
 };
 
 // Create the context
@@ -220,6 +222,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return wishlistItems.length
   };
 
+  const removeWishlistItem = (id: string) => {
+    setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== id));
+  };
+
+  const clearWishlist = () => {
+    setWishlistItems([]);
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -232,7 +242,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         removeItem,
         clearCart,
         getTotalItems,
-        getWishlistTotalItems
+        getWishlistTotalItems,
+        clearWishlist,
+        removeWishlistItem
       }}
     >
       {children}

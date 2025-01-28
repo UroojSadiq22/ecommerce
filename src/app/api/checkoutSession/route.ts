@@ -3,7 +3,7 @@ import Stripe from "stripe";
 
 // Initialize Stripe with your secret key
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-12-18.acacia", // Make sure to update this as needed
+  apiVersion: "2024-12-18.acacia",
 });
 
 type Product = {
@@ -45,7 +45,9 @@ export async function POST(req: Request) {
         success_url: process.env.NODE_ENV === "production"
         ? "https://urooj-sadiq-ecommerce.vercel.app/success"
         : "http://localhost:3000/success",
-        cancel_url: "https://urooj-sadiq-ecommerce.vercel.app/cart",
+        cancel_url: process.env.NODE_ENV === "production"
+        ? "https://urooj-sadiq-ecommerce.vercel.app/cart"
+        : "http://localhost:3000/cart",
         
       });
 

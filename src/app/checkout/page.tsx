@@ -5,12 +5,13 @@ import { Button } from "@/components/ui/button";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 export default function Checkout() {
-    const { cartItems , clearCart } = useCart();
+  const { cartItems, clearCart } = useCart();
   const [loading, setloading] = useState(false); // Loading state
-
 
   const handlePayment = async () => {
     const stripe = await stripePromise;
@@ -20,7 +21,7 @@ export default function Checkout() {
       return;
     }
 
-    setloading(true); 
+    setloading(true);
 
     try {
       const stockUpdateResponse = await fetch("/api/stockUpdate", {
@@ -38,9 +39,7 @@ export default function Checkout() {
       }
 
       setloading(false); // Stop loading
-    
 
-      
       // Create a Stripe Checkout session
       const response = await fetch("/api/checkoutSession", {
         method: "POST",
@@ -52,12 +51,9 @@ export default function Checkout() {
         throw new Error("Failed to create checkout session");
       }
 
-      
-
       const { id } = await response.json();
 
       if (id) {
-
         // Redirect to Stripe Checkout
         const { error } = await stripe.redirectToCheckout({ sessionId: id });
         if (error) {
