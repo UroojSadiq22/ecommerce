@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useCart } from "../context/cart-context";
 import Image from "next/image";
 import { Slide, toast } from "react-toastify";
-import { loadStripe } from "@stripe/stripe-js";
 import Link from "next/link";
 
 // Make sure to replace this with your Stripe publishable key
@@ -20,20 +19,33 @@ export default function Cart() {
   const { cartItems, removeItem, incrementItem, decrementItem, clearCart } =
     useCart();
 
-    const handleIncrement = (id:string) => {
-      incrementItem(id);
-      toast.success("Item added successfully!", {
-        position: "top-center", // Use a string for the position
-        autoClose: 3000,
-        transition: Slide, // Optional transition effect
-      });
+    const handleIncrement = (id: string) => {
+      const item = cartItems.find((cartItem) => cartItem.id === id);
+    
+      if (item) {
+        if (item.quantity < item.stock) {
+          incrementItem(id);
+          toast.success("Item added successfully!", {
+            position: "bottom-right",
+            autoClose: 3000,
+            transition: Slide,
+          });
+        } else {
+          toast.error("Cannot add more items. Stock limit reached!", {
+            position: "bottom-right",
+            autoClose: 3000,
+            transition: Slide,
+          });
+        }
+      }
     };
+    
   
     const handleDecrement = (id:string , quantity:number) => {
       if (quantity > 1) {
         decrementItem(id);
         toast.error("Item removed successfully!", {
-          position: "top-center",
+          position: "bottom-right",
           autoClose: 3000,
           transition: Slide,
         });

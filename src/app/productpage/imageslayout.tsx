@@ -193,18 +193,8 @@ export default function ImagesLayout({
           ))}
         </div>
 
-        <div className="flex md:gap-4 gap-2 pt-4">
-          <Button
-            variant="outline"
-            className="relative overflow-hidden group transition-all duration-300 ease-in-out md:px-10 px-6 py-2 rounded-3xl text-black bg-gray-200 hover:text-white"
-          >
-            <span className="absolute inset-0 bg-black transition-transform duration-300 ease-in-out transform scale-x-0 origin-left group-hover:scale-x-100"></span>
-            <h1 className="relative z-10 flex items-center md:gap-8 gap-4">
-              <p className="font-bold text-xl">-</p>
-              <p className="text-sm">1</p>
-              <p className="font-bold text-xl">+</p>
-            </h1>
-          </Button>
+        
+        
           <Button
             onClick={handleAddToCart}
             variant="outline"
@@ -215,7 +205,7 @@ export default function ImagesLayout({
               Add to Cart
             </h1>
           </Button>
-        </div>
+       
       </div>
     </main>
   );

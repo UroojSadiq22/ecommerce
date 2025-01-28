@@ -150,7 +150,7 @@ export default function Mens() {
       
       {/* <ImagesLayout /> */}
 
-      <div className="md:hidden">
+      <div className="lg:hidden">
         <Sheet>
           <SheetTrigger asChild>
             <SlidersVertical />
@@ -176,8 +176,8 @@ export default function Mens() {
 
       <div>
         {products.length > 0 ? (
-          <div className="md:grid md:grid-cols-[3fr,9fr] gap-2 mt-4 items-start">
-            <div className="hidden md:block border-2 p-4 rounded-2xl">
+          <div className="lg:grid lg:grid-cols-[3fr,9fr] gap-2 mt-4 items-start">
+            <div className="hidden lg:block border-2 p-4 rounded-2xl">
               <Filters
                 selectedSizes={selectedSizes}
                 setSelectedSizes={setSelectedSizes}

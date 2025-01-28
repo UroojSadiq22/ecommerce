@@ -8,7 +8,7 @@ import { useState } from "react";
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function Checkout() {
-    const { cartItems } = useCart();
+    const { cartItems , clearCart } = useCart();
   const [loading, setloading] = useState(false); // Loading state
 
 
@@ -20,9 +20,26 @@ export default function Checkout() {
       return;
     }
 
-    setloading(true); // Start loading
+    setloading(true); 
 
     try {
+      const stockUpdateResponse = await fetch("/api/stockUpdate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItems }),
+      });
+
+      if (stockUpdateResponse.ok) {
+        console.log("Stock updated successfully");
+        clearCart(); // Clear the cart
+      } else {
+        const { error } = await stockUpdateResponse.json();
+        console.error("Failed to update stock:", error);
+      }
+
+      setloading(false); // Stop loading
+    
+
       
       // Create a Stripe Checkout session
       const response = await fetch("/api/checkoutSession", {
@@ -34,6 +51,8 @@ export default function Checkout() {
       if (!response.ok) {
         throw new Error("Failed to create checkout session");
       }
+
+      
 
       const { id } = await response.json();
 

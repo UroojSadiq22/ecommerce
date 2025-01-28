@@ -144,7 +144,7 @@ export default function Cards({ products }: CardsProps) {
   const { cartItems, addItem, addToWishlist } = useCart();
 
   const handleAddToCart = (product: Product) => {
-    if (product.stock <= 0) {
+    if (!product.Instock || product.stock <= 0) {
       toast.error("This item is out of stock!", {
         position: "bottom-right",
         autoClose: 3000,
@@ -204,8 +204,16 @@ export default function Cards({ products }: CardsProps) {
       {products.map((product) => (
         <div
           key={product._id}
-          className="bg-white shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg flex flex-col"
+          className="relative bg-white shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg flex flex-col"
         >
+
+           <div
+            className={`absolute top-2 left-2 px-3 py-1 rounded-full text-xs font-bold ${
+              product.Instock ? "bg-green-200 text-green-800" : "bg-red-200 text-red-800"
+            }`}
+          >
+            {product.Instock ? `In Stock (${product.stock})` : "Out of Stock"}
+          </div>
           {/* Product Image */}
           <Link href={`/productpage/${product._id}`}>
             <Image

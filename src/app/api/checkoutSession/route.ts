@@ -42,11 +42,12 @@ export async function POST(req: Request) {
       )) ,
          
         mode: "payment", // Use "payment" for one-time purchases
-        success_url: "https://urooj-sadiq-ecommerce.vercel.app/success",
+        success_url: process.env.NODE_ENV === "production"
+        ? "https://urooj-sadiq-ecommerce.vercel.app/success"
+        : "http://localhost:3000/success",
         cancel_url: "https://urooj-sadiq-ecommerce.vercel.app/cart",
         
       });
-      console.log("Checkout session created:", session);
 
 
       return NextResponse.json({ id: session.id });
