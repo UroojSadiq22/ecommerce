@@ -145,6 +145,7 @@ export default function Onsale() {
             side="bottom"
             className="h-[70%] rounded-t-3xl pt-8 overflow-y-auto"
           >
+            
             <Filters
               selectedSizes={selectedSizes}
               setSelectedSizes={setSelectedSizes}
@@ -193,10 +194,7 @@ export default function Onsale() {
         )}
       </div>
 
-      {/* <div className="flex flex-col items-center">
-        <Reviews />
-      </div>
-
+      {/* 
       <div>
         <RelatedProducts />
       </div> */}

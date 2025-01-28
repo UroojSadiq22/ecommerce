@@ -25,17 +25,19 @@ export default function Topsellings() {
   useEffect(() => {
     const fetchProducts = async () => {
       const query = `*[_type == "products"]{
-          _id,
-          name,
-    description,
-    price,
-    "imageUrl": image.asset->url,
-    discountPercent,
-    isNew,
-    colors,
-    sizes,
-    rating,
-    wearfor
+           _id,
+  name,
+  description,
+  price,
+  "imageUrl": image.asset->url,
+  discountPercent,
+  isNew,
+  colors,
+  sizes,
+  rating,
+  wearfor,
+  stock,
+  Instock
          }`;
       const data = await client.fetch(query);
 

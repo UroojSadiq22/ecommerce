@@ -22,7 +22,7 @@ type Product = {
   wearfor: "men" | "women" | "kids";
   imageUrl: string; // Matches the alias for image URL
   stock: number;
-  Instock:boolean
+  Instock: boolean;
 };
 
 export default function Newarrivals() {
@@ -192,10 +192,7 @@ export default function Newarrivals() {
         )}
       </div>
 
-      {/* <div className="flex flex-col items-center">
-        <Reviews />
-      </div>
-
+      {/* 
       <div>
         <RelatedProducts />
       </div> */}

@@ -62,18 +62,17 @@ export default function Mens() {
   useEffect(() => {
     const fetchProducts = async () => {
       const query = `*[_type == "products" && wearfor == "men"] {
-  _id,
+     _id,
   name,
-  price,
   description,
+  price,
   "imageUrl": image.asset->url,
-  category,
   discountPercent,
-  new,
+  isNew,
   colors,
   sizes,
   rating,
-  reviews,
+  wearfor,
   stock,
   Instock
 }
@@ -188,10 +187,7 @@ export default function Mens() {
         )}
       </div>
 
-      {/* <div className="flex flex-col items-center">
-        <Reviews />
-      </div>
-
+      {/* 
       <div>
         <RelatedProducts />
       </div> */}

@@ -26,7 +26,7 @@ export default function Arrivals() {
     const fetchProducts = async () => {
       const query = `*[_type == "products"]{
         _id,
-        name,
+  name,
   description,
   price,
   "imageUrl": image.asset->url,
@@ -35,7 +35,9 @@ export default function Arrivals() {
   colors,
   sizes,
   rating,
-  wearfor
+  wearfor,
+  stock,
+  Instock
        }`;
       const data = await client.fetch(query);
 

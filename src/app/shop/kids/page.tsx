@@ -29,7 +29,7 @@ export default function Mens() {
   const paths = [
     { label: "Home", href: "/" },
     { label: "Shop", href: "" },
-    { label: "Men", href: "/shop/mens" },
+    { label: "Kids", href: "/shop/kids" },
   ];
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -69,11 +69,11 @@ export default function Mens() {
   "imageUrl": image.asset->url,
   category,
   discountPercent,
-  new,
+  isNew,
   colors,
   sizes,
   rating,
-  reviews
+  reviews,
   stock,
   Instock
 }
@@ -187,14 +187,6 @@ export default function Mens() {
           <Loader />
         )}
       </div>
-
-      {/* <div className="flex flex-col items-center">
-        <Reviews />
-      </div>
-
-      <div>
-        <RelatedProducts />
-      </div> */}
     </main>
   );
 }

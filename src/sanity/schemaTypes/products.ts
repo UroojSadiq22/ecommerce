@@ -45,9 +45,9 @@ export default defineType({
             type: 'number',
         },
         {
-            name:"new",
+            name:"isNew",
             type: 'boolean',
-            title:"New",
+            title:"isNew",
         },
         {
             name:"colors",
