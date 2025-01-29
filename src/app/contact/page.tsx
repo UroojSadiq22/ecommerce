@@ -12,7 +12,7 @@ export default function CustomerSupport() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-3xl">
           <p className="text-gray-600 text-center mb-6 lg:text-base text-sm">
-            We're here to assist you with any questions or concerns you may
+            We&apos;re here to assist you with any questions or concerns you may
             have. Please fill out the form below with your issue and our support
             team will get back to you as soon as possible.
           </p>
