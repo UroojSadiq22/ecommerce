@@ -1,13 +1,8 @@
+"use client"
 import { Button } from "@/components/ui/button";
-
-import {
-  Facebook,
-  Github,
-  Instagram,
-  Mail,
-  Twitter,
-} from "lucide-react";
+import { Facebook, Github, Instagram, Mail, Twitter } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 const payments = [
   { src: "/Visa.png", alt: "visa" },
@@ -18,6 +13,9 @@ const payments = [
 ];
 
 export default function Footer() {
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <>
       <section className="bg-black md:w-[80%] w-[90%] rounded-lg flex lg:flex-row flex-col justify-between absolute z-20 left-1/2 transform -translate-x-1/2 py-6 md:px-8 px-4">
@@ -45,12 +43,12 @@ export default function Footer() {
         </div>
       </section>
       <main className="flex flex-col justify-center md:p-14 p-4 relative bottom-0 left-0 right-0 z-10 lg:h-[70%] bg-gray-200 md:mt-24 mt-48">
-        <div className="flex lg:flex-row flex-col justify-around items-center lg:gap-0 gap-8">
-          <div className="flex flex-col md:mt-20 mt-32 lg:w-[25%] md:justify-center items-start md:gap-6 gap-2">
+        <div className="flex md:flex-row flex-col justify-around items-center lg:gap-0 gap-8">
+          <div className="flex flex-col lg:mt-20 mt-40 md:w-[25%] w-[80%] md:justify-center md:items-start items-center md:gap-6 gap-2">
             <div className="text-3xl font-bold">
               <h1 className="font-integral font-extrabold text-4xl">SHOP.CO</h1>
             </div>
-            <p className="text-xs text-start">
+            <p className="text-xs md:text-start text-center">
               We have clothes that suits your style and which you&apos;re proud
               to wear. From women to men.
             </p>
@@ -73,63 +71,41 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="lg:flex lg:flex-row grid grid-cols-2 md:gap-14 mt-20">
+          <div className="lg:flex lg:flex-row grid grid-cols-2 lg:gap-24 md:mt-28 mt-8">
             <div className="flex flex-col justify-center">
               <h1 className="font-bold text-xl md:mb-8 mb-6">Company</h1>
-              <ul className="flex flex-col gap-2 ">
-                <li className="cursor-pointer hover:text-gray-400">About</li>
-                <li className="cursor-pointer hover:text-gray-400">Features</li>
-                <li className="cursor-pointer hover:text-gray-400">Works</li>
-                <li className="cursor-pointer hover:text-gray-400">Career</li>
-              </ul>
+              <div className="flex flex-col gap-2 ">
+                <Link href="/about">
+                  <p className="cursor-pointer hover:text-gray-400" onClick={handleScrollToTop}>
+                    About
+                  </p>
+                </Link>
+                <p className="cursor-pointer hover:text-gray-400">Features</p>
+                <p className="cursor-pointer hover:text-gray-400">Works</p>
+                <p className="cursor-pointer hover:text-gray-400">Resources</p>
+              </div>
             </div>
 
             <div className="flex flex-col justify-center">
               <h1 className="font-bold text-xl md:mb-8 mb-6">Help</h1>
-              <ul className="flex flex-col gap-2 ">
-                <li className="cursor-pointer hover:text-gray-400">
-                  Customer Support
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">
-                  Delivery Detail
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">
+              <div className="flex flex-col gap-2 ">
+                <Link href="/contact">
+                  <p className="cursor-pointer hover:text-gray-400" onClick={handleScrollToTop}>
+                    {" "}
+                    Customer Support
+                  </p>
+                </Link>
+                <Link href="/faqs">
+                  <p className="cursor-pointer hover:text-gray-400" onClick={handleScrollToTop}>FAQ</p>
+                </Link>
+
+                <p className="cursor-pointer hover:text-gray-400">
                   Terms & Conditions
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">
+                </p>
+                <p className="cursor-pointer hover:text-gray-400">
                   Privacy Policy
-                </li>
-              </ul>
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <h1 className="font-bold text-xl md:mb-8 mb-6">FAQ</h1>
-              <ul className="flex flex-col gap-2 ">
-                <li className="cursor-pointer hover:text-gray-400">Account</li>
-                <li className="cursor-pointer hover:text-gray-400">
-                  Manage Deliveries
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">Orders</li>
-                <li className="cursor-pointer hover:text-gray-400">Payments</li>
-              </ul>
-            </div>
-
-            <div className="flex flex-col justify-center">
-              <h1 className="font-bold text-xl md:mt-0 mt-4 md:mb-8 mb-6">Resources</h1>
-              <ul className="flex flex-col gap-2 ">
-                <li className="cursor-pointer hover:text-gray-400">
-                  Free eBooks
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">
-                  Development Tutorial
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">
-                  How to - Blog
-                </li>
-                <li className="cursor-pointer hover:text-gray-400">
-                  Youtube Playlist
-                </li>
-              </ul>
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -141,9 +117,12 @@ export default function Footer() {
               <p>Shop.co © 2000-2023, All Rights Reserved.</p>
             </div>
 
-            <div className="flex flex-row justify-center gap-2">
+            <div className="flex flex-row justify-center items-center gap-2">
               {payments.map((i, index) => (
-                <div key={index} className="bg-white px-2 pt-2 pb-1 rounded-xl">
+                <div
+                  key={index}
+                  className="bg-white w-14 h-8 flex items-center justify-center rounded-xl"
+                >
                   <Image src={i.src} alt={i.alt} width={40} height={40} />
                 </div>
               ))}
