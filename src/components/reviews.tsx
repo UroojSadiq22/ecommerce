@@ -75,7 +75,7 @@ export default function Reviews({ id }: { id: string }) {
             name: newReview.name,
             review: newReview.review,
             rating: newReview.rating,
-            datePosted: new Date().toLocaleDateString(),
+            datePosted: new Date().toLocaleDateString("en-CA"),
           },
           ...prev,
         ]);
@@ -108,7 +108,7 @@ export default function Reviews({ id }: { id: string }) {
           }
         }`;
 
-        const data = await client.fetch(query, { productId: id });
+        const data = await client.fetch(query, { productId: id }, { cache: "no-store" });
 
         if (data.length > 0) {
           setReviews(data[0].reviews || []);

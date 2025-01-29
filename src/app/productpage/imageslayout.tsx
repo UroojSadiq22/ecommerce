@@ -157,7 +157,7 @@ export default function ImagesLayout({
           {colors.map((color, index) => (
             <div
               key={index}
-              className="w-10 h-10 rounded-full cursor-pointer relative"
+              className="w-10 h-10 border-2 rounded-full cursor-pointer relative"
               style={{ backgroundColor: color }}
               onClick={() => setSelectedColor(color)} // Set selected color
             >

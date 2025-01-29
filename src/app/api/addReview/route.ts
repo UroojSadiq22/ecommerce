@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "next-sanity";
+import { client } from "@/sanity/lib/client";
 
 // Define types for the request body
 interface AddReviewRequest {
@@ -8,18 +8,6 @@ interface AddReviewRequest {
   review: string;
   rating: number;
 }
-
-// Sanity configuration
-const config = {
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || "production",
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "",
-  useCdn: false,
-  apiVersion: "2023-01-01",
-  token: process.env.SANITY_API_TOKEN || "", // Secure API token
-};
-
-// Create a Sanity client
-const sanityClient = createClient(config);
 
 export async function POST(request: NextRequest) {
   try {
@@ -38,7 +26,7 @@ export async function POST(request: NextRequest) {
     const uniqueKey = `${productId}-${Date.now()}`;
     
     // Add review to the product in Sanity
-    await sanityClient
+    await client
       .patch(productId)
       .setIfMissing({ reviews: [] }) // Ensure the reviews field exists
       .append("reviews", [{ _key: uniqueKey, name, review, rating, datePosted: new Date().toLocaleDateString("en-CA")  }]) // Add the new review
