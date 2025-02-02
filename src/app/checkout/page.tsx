@@ -100,7 +100,7 @@ import { useCart } from "../context/cart-context";
 import { Button } from "@/components/ui/button";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -109,7 +109,6 @@ const stripePromise = loadStripe(
 export default function Checkout() {
   const { cartItems, clearCart } = useCart();
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
 
   // Shipping form state
   const [shippingDetails, setShippingDetails] = useState({

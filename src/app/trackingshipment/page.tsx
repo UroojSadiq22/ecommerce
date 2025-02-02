@@ -2,6 +2,16 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 
+type ShippingRate = {
+  rateId: string;
+  carrierFriendlyName: string;
+  serviceType: string;
+  shippingAmount: {
+    amount: number;
+    currency: string;
+  };
+};
+
 // Helper function to safely access address fields
 const getAddressField = (
   address: { [key: string]: string },
@@ -24,7 +34,7 @@ export default function TrackingShipment() {
   });
 
   // State for shipping rates, selected rate, label, tracking, loading, and errors
-  const [shippingRates, setShippingRates] = useState<any[]>([]);
+  const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]);
   const [rateId, setRateId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
