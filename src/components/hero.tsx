@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import CountUp from "react-countup";
 import Section1 from "./herosections/section1";
@@ -7,64 +7,89 @@ import Section3 from "./herosections/section3";
 import Section4 from "./herosections/section4";
 import Section5 from "./herosections/section5";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 const stats = [
   {
-    id:0,
+    id: 0,
     num: 200,
     text: "International Brands",
   },
   {
-    id:1,
+    id: 1,
 
     num: 2000,
     text: "High-Quality Products",
   },
   {
-    id:2,
+    id: 2,
     num: 30000,
     text: "Happy Customers",
   },
 ];
 export default function Hero() {
-  
+  const itemVariants = {
+    hidden: { opacity: 0, x: 70 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.9 } },
+  };
+
   return (
     <>
       <section className="w-full h-full overflow-x-hidden bg-gray-100 md:pt-10 pt-20">
         <div className="flex lg:flex-row-reverse flex-col-reverse justify-around border-l-2">
-            <div className="relative z-20">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+            }}
+            className="relative z-20"
+          >
             <Image
-            src="/cover1.jpg"
-            alt="cover"
-            width={400}
-            height={160}
-            className="w-full"
-          />
-          <Image
-            src="/star.png"
-            alt="cover"
-            width={60}
-            height={50}
-            className="absolute animate-pulse top-24 right-5"
-          />
-          <Image
-            src="/star.png"
-            alt="cover"
-            width={40}
-            height={30}
-            className="absolute animate-pulse md:bottom-72 bottom-32 left-0"
-          />
-            </div>
-         
+              src="/cover1.jpg"
+              alt="cover"
+              width={400}
+              height={160}
+              className="w-full"
+            />
+            <Image
+              src="/star.png"
+              alt="cover"
+              width={60}
+              height={50}
+              className="absolute animate-pulse top-24 right-5"
+            />
+            <Image
+              src="/star.png"
+              alt="cover"
+              width={40}
+              height={30}
+              className="absolute animate-pulse md:bottom-72 bottom-32 left-0"
+            />
+          </motion.div>
+
           <div className="flex flex-col justify-start w-full lg:w-[50%] gap-6 md:mt-32 mt-6 md:p-10 p-4">
-            <h1 className="font-integral font-extrabold md:text-6xl text-5xl">
+            <motion.h1
+              initial="hidden"
+              animate="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              variants={itemVariants}
+              className="font-integral font-extrabold md:text-6xl text-5xl"
+            >
               FIND CLOTHES THAT MATCHES YOUR STYLE
-            </h1>
-            <p>
+            </motion.h1>
+            <motion.p
+              initial="hidden"
+              animate="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              variants={itemVariants}
+            >
               Browse through our diverse range of meticulously crafted garments,
               designed to bring out your individulity and cater to your sense of
               style
-            </p>
+            </motion.p>
             <Link
               href="/onsale"
               className="md:w-[15rem] w-full relative overflow-hidden group bg-black transition-all duration-300 ease-in-out px-4 py-4 rounded-3xl text-white"
@@ -78,26 +103,24 @@ export default function Hero() {
               {stats.map((item) => {
                 return (
                   <>
-                     <div
-                    key={item.id}
-                    className={`flex flex-col justify-center ${item.id === 0 ? "pr-2 border-r-2" : ""} ${item.id === 2 ? "col-span-2" : ""}`}
-                  >
-                    <CountUp
-                      end={item.num}
-                      duration={5}
-                      delay={2}
-                      suffix="+"
-                      className="text-3xl font-bold"
-                    />
-                    
-                    <p className="leading-snug text-gray-400 lg:text-md text-xs">
-                      {item.text}
-                    </p>
-                     {/* <div className="w-0.5 h-8 bg-gray-900"></div> */}
-                  </div>
-                 
+                    <div
+                      key={item.id}
+                      className={`flex flex-col justify-center ${item.id === 0 ? "pr-2 border-r-2" : ""} ${item.id === 2 ? "col-span-2" : ""}`}
+                    >
+                      <CountUp
+                        end={item.num}
+                        duration={5}
+                        delay={2}
+                        suffix="+"
+                        className="text-3xl font-bold"
+                      />
+
+                      <p className="leading-snug text-gray-400 lg:text-md text-xs">
+                        {item.text}
+                      </p>
+                      {/* <div className="w-0.5 h-8 bg-gray-900"></div> */}
+                    </div>
                   </>
-               
                 );
               })}
             </div>

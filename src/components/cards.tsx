@@ -120,6 +120,7 @@ import { Button } from "./ui/button";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/context/cart-context";
 import { Slide, toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 type Product = {
   _id: string;
@@ -198,12 +199,19 @@ export default function Cards({ products }: CardsProps) {
 
     return stars.join(" ");
   };
-
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
   return (
     <div className="mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
-        <div
+        <motion.div
           key={product._id}
+          initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={itemVariants}
           className="relative bg-white shadow-md hover:shadow-lg transition-shadow duration-300 rounded-lg flex flex-col"
         >
 
@@ -269,7 +277,7 @@ export default function Cards({ products }: CardsProps) {
             <ShoppingCart size={20} className="mr-2" />
             Add to Cart
           </Button>
-        </div>
+        </motion.div>
       ))}
     </div>
   );

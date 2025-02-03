@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCart } from "../context/cart-context";
 import { Slide, toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 type ImagesLayoutProps = {
   id: string;
@@ -105,7 +106,14 @@ export default function ImagesLayout({
           ))}
         </div> */}
       <div className="flex md:flex-row flex-col items-center">
-        <div className="w-full h-full bg-gray-200 rounded-lg shadow-lg">
+      <motion.div
+            initial="hidden"
+            animate="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+            }} className="w-full h-full bg-gray-200 rounded-lg shadow-lg">
           <Image
             src={galleryImages[0].src}
             alt={galleryImages[0].alt}
@@ -113,11 +121,15 @@ export default function ImagesLayout({
             height={500}
             className="rounded-md "
           />
-        </div>
+        </motion.div>
         {/* </div> */}
 
         <div className="md:px-6 w-full">
-          <div className="flex flex-col gap-2 border-b-2 pb-4">
+          <motion.div initial="hidden"
+              animate="visible"
+              viewport={{ once: true, amount: 0.5 }}
+              variants={{ hidden: { opacity: 0, x: 70 },
+              visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },}} className="flex flex-col gap-2 border-b-2 pb-4">
             {/* Discounted price */}
             <h1 className="font-integral font-extrabold lg:text-3xl text-2xl">
               {title}
@@ -147,7 +159,7 @@ export default function ImagesLayout({
               )}
             </div>
             <p className="md:text-sm text-xs text-gray-400">{description}</p>
-          </div>
+          </motion.div>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ import { ShoppingBag, X } from "lucide-react";
 import { useCart } from "@/app/context/cart-context";
 import TopPagepath from "@/components/top-pagepath";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 export default function Wishlist() {
   const paths = [
@@ -18,9 +19,18 @@ export default function Wishlist() {
     <main className="max-w-7xl mx-auto min-h-screen md:pt-28 pt-28 md:px-12 px-4 mb-14 flex flex-col ">
       <TopPagepath items={paths} />
 
-      <h1 className="font-integral font-extrabold text-4xl md:my-4 my-2">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.95 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }}
+        className="font-integral font-extrabold text-4xl md:my-4 my-2"
+      >
         Your Wishlist
-      </h1>
+      </motion.h1>
 
       {wishlistItems.length === 0 ? (
         <div className="text-gray-200 mt-10 flex flex-col justify-center items-center">

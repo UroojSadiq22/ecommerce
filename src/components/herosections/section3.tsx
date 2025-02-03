@@ -2,6 +2,7 @@ import { client } from "@/sanity/lib/client";
 import { useEffect, useState } from "react";
 import Cards from "../cards";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 type Product = {
   _id: string;
@@ -55,12 +56,23 @@ export default function Topsellings() {
     fetchProducts();
   }, []);
 
+  const itemVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+  };
+
   return (
     <section className="md:p-6 flex flex-col justify-center items-center gap-10">
-      <h1 className="font-integral font-extrabold md:text-5xl text-4xl my-6">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={itemVariants}
+        className="font-integral font-extrabold md:text-5xl text-4xl mt-6"
+      >
         TOP SELLINGS
-      </h1>
-      <div className="overflow-x-auto scrollbar-hide">
+      </motion.h1>
+      <div className="overflow-x-auto py-12 md:px-12 scrollbar-hide">
         {products.length > 0 ? <Cards products={filteredProducts} /> : ""}
       </div>
       <Link

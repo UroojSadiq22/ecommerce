@@ -99,8 +99,8 @@
 import { useCart } from "../context/cart-context";
 import { Button } from "@/components/ui/button";
 import { loadStripe } from "@stripe/stripe-js";
+import { motion } from "framer-motion";
 import { useState } from "react";
-
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
@@ -182,16 +182,34 @@ export default function Checkout() {
 
   return (
     <main className="min-h-screen max-w-7xl mx-auto md:pt-28 pt-28 pb-10 md:px-12 px-4 ">
-      <h1 className="font-integral font-extrabold md:text-4xl text-3xl">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.95 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }}
+        className="font-integral font-extrabold md:text-4xl text-3xl"
+      >
         Checkout
-      </h1>
+      </motion.h1>
       <p className="text-gray-500">
         Please enter your shipping details and proceed to payment.
       </p>
 
       <div className="flex flex-col-reverse lg:flex-row items-start gap-6 my-10">
         {/* Shipping Details Form */}
-        <form className="border p-4 rounded-lg space-y-4 w-full shadow-xl">
+        <motion.form
+          initial="hidden"
+          animate="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={{
+            hidden: { opacity: 0, scale: 0.95 },
+            visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+          }}
+          className="border p-4 rounded-lg space-y-4 w-full shadow-xl"
+        >
           {[
             "name",
             "phone",
@@ -213,7 +231,7 @@ export default function Checkout() {
               />
             </div>
           ))}
-        </form>
+        </motion.form>
 
         {/* Cart Items Summary */}
         <div className="border p-4 rounded-lg w-full bg-gray-100">

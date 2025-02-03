@@ -9,6 +9,7 @@ import Filters from "@/components/filters";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SlidersVertical } from "lucide-react";
 import PaginationComponent from "@/components/paginationcomponent";
+import { motion } from "framer-motion";
 
 type Product = {
   _id: string;
@@ -22,7 +23,7 @@ type Product = {
   wearfor: "men" | "women" | "kids";
   imageUrl: string; // Matches the alias for image URL
   stock: number;
-  Instock:boolean
+  Instock: boolean;
 };
 
 export default function Onsale() {
@@ -130,9 +131,18 @@ export default function Onsale() {
       <div>
         <TopPagepath items={paths} />
       </div>
-      <h1 className="my-4 font-integral text-2xl font-extrabold">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.8 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }}
+        className="my-4 font-integral text-2xl font-extrabold"
+      >
         Limited Time Offers – Grab the Best Discounts!
-      </h1>
+      </motion.h1>
       {/* <ImagesLayout /> */}
 
       <div className="lg:hidden">
@@ -145,7 +155,6 @@ export default function Onsale() {
             side="bottom"
             className="h-[70%] rounded-t-3xl pt-8 overflow-y-auto"
           >
-            
             <Filters
               selectedSizes={selectedSizes}
               setSelectedSizes={setSelectedSizes}

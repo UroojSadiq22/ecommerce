@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";;
+import { Button } from "@/components/ui/button";
 import { client } from "@/sanity/lib/client";
 import { Slide, toast } from "react-toastify";
+import { motion } from "framer-motion";
 
 interface Review {
   id: string;
@@ -63,12 +64,12 @@ export default function Reviews({ id }: { id: string }) {
 
       const result = await response.json();
       if (response.ok) {
-        toast.success(result.message , {
+        toast.success(result.message, {
           position: "bottom-right",
           autoClose: 3000,
           transition: Slide,
         });
-       
+
         setReviews((prev) => [
           {
             id: String(Date.now()),
@@ -108,7 +109,11 @@ export default function Reviews({ id }: { id: string }) {
           }
         }`;
 
-        const data = await client.fetch(query, { productId: id }, { cache: "no-store" });
+        const data = await client.fetch(
+          query,
+          { productId: id },
+          { cache: "no-store" }
+        );
 
         if (data.length > 0) {
           setReviews(data[0].reviews || []);
@@ -126,7 +131,16 @@ export default function Reviews({ id }: { id: string }) {
   return (
     <div className="my-6">
       {/* Input Form for New Review */}
-      <div className="my-4 p-6 border rounded-lg">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.95 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }}
+        className="my-4 p-6 border rounded-lg"
+      >
         <h2 className="text-lg font-bold mb-4">Write a Review</h2>
         <input
           type="text"
@@ -167,16 +181,34 @@ export default function Reviews({ id }: { id: string }) {
             {isSubmitting ? "Submitting..." : "Submit Review"}
           </h1>
         </Button>
-      </div>
+      </motion.div>
 
-      <h1 className="font-bold md:text-xl lg:my-8 my-2">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, x: 70 },
+          visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+        }}
+        className="font-bold md:text-xl lg:my-8 my-2"
+      >
         All Reviews{" "}
         <span className="md:text-base text-xs font-normal text-gray-500">
           ({reviews.length})
         </span>
-      </h1>
+      </motion.h1>
       {/* Render Reviews */}
-      <div className="grid md:grid-cols-2 gap-4">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.95 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }}
+        className="grid md:grid-cols-2 gap-4"
+      >
         {reviews.map((review) => (
           <div
             key={review.id}
@@ -189,12 +221,10 @@ export default function Reviews({ id }: { id: string }) {
                 {review.name} <span className="text-sm">✅</span>
               </h1>
               <p className=" text-gray-700">{review.review}</p>
-
             </div>
-            
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

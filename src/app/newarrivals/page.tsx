@@ -9,6 +9,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { SlidersVertical } from "lucide-react";
 import Filters from "@/components/filters";
 import PaginationComponent from "@/components/paginationcomponent";
+import { motion } from "framer-motion";
 
 type Product = {
   _id: string;
@@ -129,9 +130,18 @@ export default function Newarrivals() {
         <TopPagepath items={paths} />
       </div>
 
-      <h1 className="my-4 font-integral text-2xl font-extrabold">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.8 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }}
+        className="my-4 font-integral text-2xl font-extrabold"
+      >
         Step Into Style: New Arrivals!
-      </h1>
+      </motion.h1>
 
       {/* <ImagesLayout /> */}
       <div className="lg:hidden">

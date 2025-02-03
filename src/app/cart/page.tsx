@@ -7,6 +7,7 @@ import { useCart } from "../context/cart-context";
 import Image from "next/image";
 import { Slide, toast } from "react-toastify";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 // Make sure to replace this with your Stripe publishable key
 // const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
@@ -89,12 +90,19 @@ export default function Cart() {
     <main className="max-w-7xl mx-auto md:pt-28 pt-28 md:px-12 px-4 mb-14 flex flex-col ">
       <TopPagepath items={paths} />
 
-      <h1 className="font-integral font-extrabold text-4xl md:my-4 my-2">
+      <motion.h1
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: true, amount: 0.5 }}
+        variants={{
+          hidden: { opacity: 0, scale: 0.8 },
+          visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+        }} className="font-integral font-extrabold text-4xl md:my-4 my-2">
         Your Cart
-      </h1>
+      </motion.h1>
 
       <div className="grid md:grid-cols-2 grid-cols-1 items-start gap-4">
-        <div className="border-2 rounded-lg">
+        <div className="border-2 rounded-lg bg-gray-100">
           <div className="flex flex-col md:gap-2 md:flex-wrap md:justify-center">
             {cartItems.length === 0 ? (
               <div className="text-gray-200 flex justify-center items-center">
@@ -195,7 +203,14 @@ export default function Cart() {
           </div>
         </div>
 
-        <div className="flex flex-col md:mx-4 p-6 border-2 rounded-lg">
+        <motion.div
+            initial="hidden"
+            animate="visible"
+            viewport={{ once: true, amount: 0.5 }}
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: { opacity: 1, scale: 1, transition: { duration: 0.8 } },
+            }} className="flex flex-col md:mx-4 p-6 border-2 rounded-lg shadow-xl">
           <h1 className="font-bold text-lg mb-4">Order Summary</h1>
           <div className="flex justify-between">
             <h1>Subtotal</h1>
@@ -245,7 +260,7 @@ export default function Cart() {
                Go to Checkout
             </h1>
           </Link>
-        </div>
+        </motion.div>
       </div>
     </main>
   );
