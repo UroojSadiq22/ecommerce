@@ -107,7 +107,7 @@ const stripePromise = loadStripe(
 );
 
 export default function Checkout() {
-  const { cartItems, clearCart } = useCart();
+  const { cartItems } = useCart();
   const [loading, setLoading] = useState(false);
 
   // Shipping form state
@@ -136,19 +136,19 @@ export default function Checkout() {
     setLoading(true);
 
     try {
-      const stockUpdateResponse = await fetch("/api/stockUpdate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItems }),
-      });
+      // const stockUpdateResponse = await fetch("/api/stockUpdate", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ cartItems }),
+      // });
 
-      if (stockUpdateResponse.ok) {
-        console.log("Stock updated successfully");
-        clearCart();
-      } else {
-        const { error } = await stockUpdateResponse.json();
-        console.error("Failed to update stock:", error);
-      }
+      // if (stockUpdateResponse.ok) {
+      //   console.log("Stock updated successfully");
+      //   clearCart();
+      // } else {
+      //   const { error } = await stockUpdateResponse.json();
+      //   console.error("Failed to update stock:", error);
+      // }
 
       // Create a Stripe Checkout session
       const response = await fetch("/api/checkoutSession", {

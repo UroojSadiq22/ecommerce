@@ -1,7 +1,38 @@
+"use client"
 import { ThumbsUp } from "lucide-react";
 import Link from "next/link";
+import { useCart } from "../context/cart-context";
+import { useEffect } from "react";
 
 export default function Success() {
+  const { cartItems, clearCart } = useCart();
+
+  useEffect(() => {
+    const updateStockAndClearCart = async () => {
+      if (cartItems.length === 0) return; // Prevent unnecessary API calls
+
+      try {
+        const stockUpdateResponse = await fetch("/api/stockUpdate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cartItems }),
+        });
+
+        if (stockUpdateResponse.ok) {
+          console.log("Stock updated successfully");
+          clearCart();
+        } else {
+          const { error } = await stockUpdateResponse.json();
+          console.error("Failed to update stock:", error);
+        }
+      } catch (error) {
+        console.error("Error updating stock:", error);
+      }
+    };
+
+    updateStockAndClearCart();
+  }, [cartItems, clearCart]); // Runs once when the component mounts
+  
   return (
     <div className="min-h-screen flex flex-col gap-8 justify-center items-center bg-gradient-to-br from-gray-100 via-gray-300 to-gray-400">
       <ThumbsUp size={48} color="#fbc913" strokeWidth={3} />
