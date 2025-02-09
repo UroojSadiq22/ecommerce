@@ -226,7 +226,7 @@ export default function Checkout() {
                 value={shippingDetails[field as keyof typeof shippingDetails]}
                 onChange={handleChange}
                 placeholder={field.charAt(0).toUpperCase() + field.slice(1)}
-                className="w-full p-3 border rounded-md shadow-sm focus:ring focus:ring-indigo-400"
+                className="w-full p-3 border rounded-md shadow-sm"
                 required
               />
             </div>

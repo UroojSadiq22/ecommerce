@@ -7,12 +7,19 @@ import Mobilenav from "./mobilenav";
 import Desktopnav from "./desktopnav";
 import { useCart } from "@/app/context/cart-context";
 import SearchComponent from "./search";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 export default function Header() {
   const { getTotalItems, getWishlistTotalItems } = useCart(); // Get the total items in the cart
   const totalItems = getTotalItems(); // Get the total number of items
   const [isVisible, setIsVisible] = useState(true);
   const wishlistTotalItems = getWishlistTotalItems();
+
   const handleClose = () => {
     setIsVisible(false);
   };
@@ -67,7 +74,7 @@ export default function Header() {
 
         <div className="flex justify-center items-center md:gap-4 gap-2">
           <SearchComponent />
-        
+
           <Link href="/wishlist" className="cursor-pointer relative">
             <Heart />
             {wishlistTotalItems > 0 && (
@@ -86,7 +93,26 @@ export default function Header() {
             )}
           </Link>
 
-          <CircleUserRound />
+          {/* <Link href={isSignedIn ? "/profile" : "/signin"} className="cursor-pointer">
+            <CircleUserRound />
+          </Link> */}
+          <SignedOut>
+            <SignInButton mode="modal">
+              <CircleUserRound className="cursor-pointer"/>
+            </SignInButton>
+          </SignedOut>
+       
+
+          <SignedIn>
+            {/* {user && user.username ? (
+              
+              <span className="font-extrabold cursor-pointer flex items-center justify-center bg-gray-200 text-gray-800 rounded-full w-8 h-8">
+                {user.username[0].toUpperCase()}
+              </span>
+            ) : ( */}
+              <UserButton />
+            {/* )} */}
+          </SignedIn>
         </div>
       </nav>
     </header>

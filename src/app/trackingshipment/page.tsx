@@ -39,6 +39,7 @@ export default function TrackingShipment() {
   // State for shipping rates, selected rate, label, tracking, loading, and errors
   const [shippingRates, setShippingRates] = useState<ShippingRate[]>([]);
   const [rateId, setRateId] = useState<string | null>(null);
+  const [noRatesAvailable, setNoRatesAvailable] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<string[]>([]);
   const [shippingLabel, setShippingLabel] = useState<string | null>(null);
@@ -54,6 +55,7 @@ export default function TrackingShipment() {
     setLoading(true);
     setErrors([]);
     setShippingRates([]);
+    setNoRatesAvailable(false);
 
     try {
       const response = await fetch("/api/getShippingRates", {
@@ -77,7 +79,11 @@ export default function TrackingShipment() {
       }
 
       const data = await response.json();
-      setShippingRates(data.shipmentDetails.rateResponse.rates);
+      if (data.shipmentDetails.rateResponse.rates.length === 0) {
+        setNoRatesAvailable(true);
+      } else {
+        setShippingRates(data.shipmentDetails.rateResponse.rates);
+      }
     } catch (error) {
       console.error("Error fetching rates:", error);
       setErrors(["An error occurred while fetching rates."]);
@@ -176,6 +182,13 @@ export default function TrackingShipment() {
           </Button>
         </form>
 
+        {noRatesAvailable && (
+          <div className="my-4 p-4 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded">
+            🚫 No shipping rates available for this address. Please try a
+            different address.
+          </div>
+        )}
+        
         {/* Display Error Messages */}
         {errors.length > 0 && (
           <div className="my-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
