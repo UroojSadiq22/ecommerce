@@ -404,11 +404,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeItem = (id: string) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    setCartItems((prevItems) => {
+      const updatedItems = prevItems.filter((item) => item.id !== id);
+      localStorage.setItem("cartItems", JSON.stringify(updatedItems));
+      return updatedItems;
+    });
   };
 
   const clearCart = () => {
     setCartItems([]);
+    localStorage.removeItem("cartItems");
   };
 
   const getTotalItems = () => {
@@ -420,11 +425,16 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const removeWishlistItem = (id: string) => {
-    setWishlistItems((prevItems) => prevItems.filter((item) => item.id !== id));
+    setWishlistItems((prevItems) => {
+      const updatedWishlistItems = prevItems.filter((item) => item.id !== id);
+      localStorage.setItem("wishlistItems", JSON.stringify(updatedWishlistItems));
+      return updatedWishlistItems;
+    });
   };
 
   const clearWishlist = () => {
     setWishlistItems([]);
+    localStorage.removeItem("wishlistItems");
   };
 
   return (
